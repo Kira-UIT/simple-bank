@@ -9,16 +9,24 @@ postgres:
 createdb:
 	docker exec -it postgres12 createdb --username=<username> --owner=<username> simple_bank
 
-dropdb:
-	docker exec -it postgres12 dropdb simple_bank
+migrateup:
+	migrate -path db/migration -database "postgresql://<username>:<password>@localhost:5432/simple_bank?sslmode=disable" --verbose up
 
-.PHONY: postgres createdb dropdb
+migratedown:
+	migrate -path db/migration -database "postgresql://<username>:<password>@localhost:5432/simple_bank?sslmode=disable" --verbose down
 ```
 
 * Docker
 ```
 docker pull postgres@12-alpine
+docker pull kjconroy/sqlc
+```
+
+* Run Makefle
+
+```
 make postgres
 make createdb
 make migrateup
+make sqlc
 ```
