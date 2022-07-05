@@ -2,10 +2,11 @@ package db
 
 import (
 	"database/sql"
-	_ "github.com/lib/pq"
 	"log"
 	"os"
 	"testing"
+
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -14,6 +15,7 @@ const (
 )
 
 var testQueries *Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
 	conn, err := sql.Open(dbDriver, dbSource)
